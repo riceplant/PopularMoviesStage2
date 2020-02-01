@@ -1,8 +1,10 @@
-package com.riceplant.popularmovies;
+package com.riceplant.popularmovies.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.riceplant.popularmovies.R;
 
 public class MainActivity extends AppCompatActivity {
 
