@@ -1,4 +1,4 @@
-package com.riceplant.popularmovies;
+package com.riceplant.popularmovies.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.riceplant.popularmovies.R;
 
 public class MainActivity extends AppCompatActivity {
 
