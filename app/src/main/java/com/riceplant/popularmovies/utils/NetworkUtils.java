@@ -2,12 +2,18 @@ package com.riceplant.popularmovies.utils;
 
 import android.net.Uri;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
 
 public class NetworkUtils {
 
-    private static final String BASE_URL = "https://api.themoviedb.org/3/discover/movie?api_key=";
+    private static final String BASE_URL = "https://api.themoviedb.org/3/discover/movie?";
+
+    private static final String PARAM_API_KEY = "api_key";
     private static final String API_KEY = "4c43b6641940650366e77e920910f07f";
 
     private static final String SORT_PARAM = "&sort_by=";
@@ -15,7 +21,7 @@ public class NetworkUtils {
 
     public static URL buildUrl() {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                .appendEncodedPath(API_KEY)
+                .appendQueryParameter(PARAM_API_KEY, API_KEY)
                 .appendQueryParameter(SORT_PARAM, sortedByPopularity)
                 .build();
 
@@ -26,5 +32,24 @@ public class NetworkUtils {
             e.printStackTrace();
         }
         return url;
+    }
+
+    public static String getResponseFromHttpUrl(URL url) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try {
+            InputStream in = urlConnection.getInputStream();
+
+            Scanner scanner = new Scanner(in);
+            scanner.useDelimiter("\\A");
+
+            boolean hasInput = scanner.hasNext();
+            if (hasInput) {
+                return scanner.next();
+            } else {
+                return null;
+            }
+        } finally {
+            urlConnection.disconnect();
+        }
     }
 }
