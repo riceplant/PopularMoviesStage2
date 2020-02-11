@@ -13,7 +13,7 @@ public class MovieDetailsUtils {
 
     public static Movie[] getSimpleMovieDetailsFromJson(Context context, String movieJsonString) throws JSONException {
 
-        final String BASE_URL = "http://image.tmdb.org/t/p/";
+        final String BASE_URL = "https://image.tmdb.org/t/p/";
         final String POSTER_SIZE = "w500";
 
         final String TMDB_RESULTS = "results";
