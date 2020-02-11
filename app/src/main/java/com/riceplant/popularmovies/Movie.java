@@ -11,6 +11,9 @@ public class Movie implements Parcelable {
     private String mSynopsis;
     private String mReleaseDate;
 
+    public Movie() {
+    }
+
     public Movie(String movieTitle, String poster, String rating, String synopsis, String releaseDate) {
         mMovieTitle = movieTitle;
         mPoster = poster;
@@ -43,20 +46,40 @@ public class Movie implements Parcelable {
         return mMovieTitle;
     }
 
+    public void setMovieTitle(String movieTitle) {
+        mMovieTitle = movieTitle;
+    }
+
     public String getPoster() {
         return mPoster;
+    }
+
+    public void setPoster(String poster) {
+        mPoster = poster;
     }
 
     public String getRating() {
         return mRating;
     }
 
+    public void setRating(String rating) {
+        mRating = rating;
+    }
+
     public String getSynopsis() {
         return mSynopsis;
     }
 
+    public void setSynopsis(String synopsis) {
+        mSynopsis = synopsis;
+    }
+
     public String getReleaseDate() {
         return mReleaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        mReleaseDate = releaseDate;
     }
 
     @Override

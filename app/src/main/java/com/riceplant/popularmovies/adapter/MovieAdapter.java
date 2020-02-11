@@ -1,6 +1,7 @@
 package com.riceplant.popularmovies.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +16,25 @@ import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private Movie[] movieData;
-
+    private Movie[] mMovieData;
     private final MovieAdapterOnClickHandler mClickHandler;
+
+    public MovieAdapter(Movie[] movies, MovieAdapterOnClickHandler clickHandler) {
+        mMovieData = movies;
+        mClickHandler = clickHandler;
+    }
 
     public interface MovieAdapterOnClickHandler {
         void onClick(int adapterPosition);
     }
 
-    public MovieAdapter(MovieAdapterOnClickHandler clickHandler) {
-        mClickHandler = clickHandler;
-    }
-
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final ImageView mMoviePoster;
 
-        public MovieAdapterViewHolder(ImageView mMoviePoster) {
-            super(mMoviePoster);
-            this.mMoviePoster = mMoviePoster;
-            mMoviePoster = mMoviePoster.findViewById(R.id.poster_iv);
-            mMoviePoster.setOnClickListener(this);
+        public MovieAdapterViewHolder(View view) {
+            super(view);
+            mMoviePoster = (ImageView) view.findViewById(R.id.poster_iv);
+            view.setOnClickListener(this);
         }
 
         @Override
@@ -53,22 +53,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         boolean shouldAttachToParentImmediately = false;
 
         View view = inflater.inflate(layoutForIdListItem, parent, shouldAttachToParentImmediately);
-        return new MovieAdapterViewHolder((ImageView) view);
+        return new MovieAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewholder, int position) {
-        String currentMovie = movieData[position].getPoster();
+        String currentMovie = mMovieData[position].getPoster();
         Picasso.get()
                 .load(currentMovie)
+                .placeholder(R.drawable.image_loading)
+                .error(R.drawable.image_not_found)
                 .into(movieAdapterViewholder.mMoviePoster);
     }
 
     @Override
     public int getItemCount() {
-        if (movieData == null) {
+        if (mMovieData == null) {
             return 0;
         }
-        return movieData.length;
+        return mMovieData.length;
     }
 }
