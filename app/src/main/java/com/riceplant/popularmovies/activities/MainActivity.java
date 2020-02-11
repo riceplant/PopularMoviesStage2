@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private MovieAdapter mMovieAdapter;
 
-    private String popular = "popular";
+    private String popular = "popularity.desc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +91,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             String sortBy = strings[0];
             URL movieRequestUrl = NetworkUtils.buildUrl(sortBy);
 
-            Log.v("This is the URL", movieRequestUrl.toString());
-
             try {
                 String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
                 Movie[] jsonMovieData = MovieDetailsUtils.getSimpleMovieDetailsFromJson(MainActivity.this, jsonMovieResponse);
@@ -130,11 +128,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         switch (menuItemSelected) {
             case R.id.action_sorting_popular:
-                popular = "popular";
+                popular = "popularity.desc";
                 loadMovieData();
                 return true;
             case R.id.action_sorting_top_rated:
-                popular = "top_rated";
+                popular = "vote_count.desc";
                 loadMovieData();
                 return true;
             default:
