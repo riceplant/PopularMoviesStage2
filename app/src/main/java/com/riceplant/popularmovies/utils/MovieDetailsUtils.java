@@ -1,7 +1,6 @@
 package com.riceplant.popularmovies.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.riceplant.popularmovies.Movie;
 
@@ -47,10 +46,7 @@ public class MovieDetailsUtils {
             movie.setReleaseDate(releaseDate);
 
             movies[i] = movie;
-
-            Log.v("JSON DATA", movie.getPoster());
         }
-
         return movies;
     }
 }
