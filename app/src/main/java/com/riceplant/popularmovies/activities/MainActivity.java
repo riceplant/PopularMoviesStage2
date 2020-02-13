@@ -29,8 +29,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private RecyclerView mRecyclerView;
     private TextView mErrorMessageTextView;
     private ProgressBar mLoadingIndicator;
-
     private MovieAdapter mMovieAdapter;
+    private Movie[] movies;
+
+    public static final String MY_MOVIE = "myMovie";
 
     private String popular = "popularity.desc";
 
@@ -58,6 +60,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         String sortByPopular = popular;
         showMovieData();
         new fetchMovieDataTask().execute(sortByPopular);
+
+    }
+
+    @Override
+    public void onClick(int adapterPosition) {
+        Context context = this;
+        Class detailClass = DetailActivity.class;
+
+        Intent detailIntent = new Intent(context, detailClass);
+        detailIntent.putExtra(MY_MOVIE, movies[adapterPosition]);
+        startActivity(detailIntent);
 
     }
 
@@ -91,16 +104,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
             try {
                 String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
-                Movie[] jsonMovieData = MovieDetailsUtils.getSimpleMovieDetailsFromJson(MainActivity.this, jsonMovieResponse);
+                movies = MovieDetailsUtils.getSimpleMovieDetailsFromJson(MainActivity.this, jsonMovieResponse);
 
-                return jsonMovieData;
+                return movies;
 
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
         }
-
         @Override
         protected void onPostExecute(Movie[] movies) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 showErrorMessage();
             }
         }
+
     }
 
     @Override
@@ -136,15 +149,5 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onClick(int adapterPosition) {
-        Context context = this;
-        Class detailClass = DetailActivity.class;
-
-        Intent detailIntent = new Intent(context, detailClass);
-        detailIntent.putExtra(Intent.EXTRA_TEXT, adapterPosition);
-        startActivity(detailIntent);
     }
 }

@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="30dp"
                     android:textStyle="bold"
-                    tools:text="Release Date:" />
+                    android:text="Release Date:" />
 
                 <TextView
                     android:id="@+id/release_date_details"
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    tools:text="Rating:" />
+                    android:text="Rating:" />
 
                 <TextView
                     android:id="@+id/rating_details"
