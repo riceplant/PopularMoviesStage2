@@ -14,22 +14,16 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView movieTitleTv;
-    private TextView ratingTv;
-    private TextView synopsisTv;
-    private TextView releaseDateTv;
-    private ImageView moviePosterIv;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        movieTitleTv = findViewById(R.id.movie_title_details);
-        ratingTv = findViewById(R.id.rating_details);
-        synopsisTv = findViewById(R.id.synopsis_details);
-        releaseDateTv = findViewById(R.id.release_date_details);
-        moviePosterIv = findViewById(R.id.poster_iv_details);
+        TextView movieTitleTv = findViewById(R.id.movie_title_details);
+        TextView ratingTv = findViewById(R.id.rating_details);
+        TextView synopsisTv = findViewById(R.id.synopsis_details);
+        TextView releaseDateTv = findViewById(R.id.release_date_details);
+        ImageView moviePosterIv = findViewById(R.id.poster_iv_details);
 
         Intent intentToCatch = getIntent();
         Movie movie = intentToCatch.getParcelableExtra(MainActivity.MY_MOVIE);

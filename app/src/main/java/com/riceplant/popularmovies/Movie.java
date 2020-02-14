@@ -14,15 +14,7 @@ public class Movie implements Parcelable {
     public Movie() {
     }
 
-    public Movie(String movieTitle, String poster, String rating, String synopsis, String releaseDate) {
-        mMovieTitle = movieTitle;
-        mPoster = poster;
-        mRating = rating;
-        mSynopsis = synopsis;
-        mReleaseDate = releaseDate;
-    }
-
-    protected Movie(Parcel in) {
+    private Movie(Parcel in) {
         mMovieTitle = in.readString();
         mPoster = in.readString();
         mRating = in.readString();

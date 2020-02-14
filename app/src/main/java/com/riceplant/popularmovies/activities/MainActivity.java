@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mErrorMessageTextView = (TextView) findViewById(R.id.tv_error_message_display);
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mErrorMessageTextView = findViewById(R.id.tv_error_message_display);
 
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageTextView.setVisibility(View.VISIBLE);
     }
 
-    public class fetchMovieDataTask extends AsyncTask<String, Void, Movie[]> {
+    class fetchMovieDataTask extends AsyncTask<String, Void, Movie[]> {
 
         @Override
         protected void onPreExecute() {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
             try {
                 String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieRequestUrl);
-                movies = MovieDetailsUtils.getSimpleMovieDetailsFromJson(MainActivity.this, jsonMovieResponse);
+                movies = MovieDetailsUtils.getSimpleMovieDetailsFromJson(jsonMovieResponse);
 
                 return movies;
 

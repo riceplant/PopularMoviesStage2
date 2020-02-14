@@ -19,6 +19,7 @@
                 android:id="@+id/poster_iv_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 tools:src="@drawable/image_loading" />
 
             <LinearLayout
@@ -41,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="30dp"
                     android:textStyle="bold"
-                    android:text="Release Date:" />
+                    android:text="@string/release_date_details" />
 
                 <TextView
                     android:id="@+id/release_date_details"
@@ -54,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Rating:" />
+                    android:text="@string/rating_details" />
 
                 <TextView
                     android:id="@+id/rating_details"
@@ -78,12 +79,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                tools:text="Synopsis:"/>
+                android:paddingLeft="8dp"
+                android:text="@string/synopsis_details"/>
 
             <TextView
                 android:id="@+id/synopsis_details"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:padding="8dp"/>
 
         </LinearLayout>
 

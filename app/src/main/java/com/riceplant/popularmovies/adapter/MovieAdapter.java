@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private Movie[] mMovieData;
+    private final Movie[] mMovieData;
     private final MovieAdapterOnClickHandler mClickHandler;
 
     public MovieAdapter(Movie[] movies, MovieAdapterOnClickHandler clickHandler) {
@@ -28,11 +28,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     }
 
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public final ImageView mMoviePoster;
+        final ImageView mMoviePoster;
 
-        public MovieAdapterViewHolder(View view) {
+        MovieAdapterViewHolder(View view) {
             super(view);
-            mMoviePoster = (ImageView) view.findViewById(R.id.poster_iv);
+            mMoviePoster = view.findViewById(R.id.poster_iv);
             view.setOnClickListener(this);
         }
 

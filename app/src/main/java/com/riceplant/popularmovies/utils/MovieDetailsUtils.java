@@ -1,7 +1,5 @@
 package com.riceplant.popularmovies.utils;
 
-import android.content.Context;
-
 import com.riceplant.popularmovies.Movie;
 
 import org.json.JSONArray;
@@ -10,7 +8,7 @@ import org.json.JSONObject;
 
 public class MovieDetailsUtils {
 
-    public static Movie[] getSimpleMovieDetailsFromJson(Context context, String movieJsonString) throws JSONException {
+    public static Movie[] getSimpleMovieDetailsFromJson(String movieJsonString) throws JSONException {
 
         final String BASE_URL = "https://image.tmdb.org/t/p/";
         final String POSTER_SIZE = "w500";
