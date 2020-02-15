@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     public static final String MY_MOVIE = "myMovie";
 
-    private String popular = "popularity.desc";
+    private String popular = "popular";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,11 +139,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         switch (menuItemSelected) {
             case R.id.action_sorting_popular:
-                popular = "popularity.desc";
+                popular = "popular";
                 loadMovieData();
                 return true;
             case R.id.action_sorting_top_rated:
-                popular = "vote_count.desc";
+                popular = "top_rated";
                 loadMovieData();
                 return true;
             default:
