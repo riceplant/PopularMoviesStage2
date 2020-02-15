@@ -14,8 +14,7 @@ public class NetworkUtils {
     private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
 
     private static final String PARAM_API_KEY = "api_key";
-    private static final String API_KEY = "4c43b6641940650366e77e920910f07f";
-    private static final String SORT_BY = "sort_by";
+    private static final String API_KEY = "INSERT_YOUR_API_KEY_HERE";
 
     public static URL buildUrl(String movieSearchQuery) {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
