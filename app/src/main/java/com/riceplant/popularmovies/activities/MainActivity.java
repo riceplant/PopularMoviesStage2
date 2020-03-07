@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     public static final String MY_MOVIE = "myMovie";
 
-    private String popular = "popular";
+    private String movieSearchQuery = "popular";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     private void loadMovieData() {
-        String sortByPopular = popular;
+        String sortByPopular = movieSearchQuery;
         showMovieData();
         new fetchMovieDataTask().execute(sortByPopular);
 
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageTextView.setVisibility(View.VISIBLE);
     }
 
-    class fetchMovieDataTask extends AsyncTask<String, Void, Movie[]> {
+    public class fetchMovieDataTask extends AsyncTask<String, Void, Movie[]> {
 
         @Override
         protected void onPreExecute() {
@@ -139,11 +139,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         switch (menuItemSelected) {
             case R.id.action_sorting_popular:
-                popular = "popular";
+                movieSearchQuery = "popular";
                 loadMovieData();
                 return true;
             case R.id.action_sorting_top_rated:
-                popular = "top_rated";
+                movieSearchQuery = "top_rated";
                 loadMovieData();
                 return true;
             default:

@@ -19,6 +19,7 @@ public class MovieDetailsUtils {
         final String TMDB_VOTE_AVERAGE = "vote_average";
         final String TMDB_SYNOPSIS = "overview";
         final String TMDB_RELEASE = "release_date";
+        final String TMDB_MOVIE_ID = "id";
 
         JSONObject movieJson = new JSONObject(movieJsonString);
         JSONArray resultsArray = movieJson.optJSONArray(TMDB_RESULTS);
@@ -36,12 +37,14 @@ public class MovieDetailsUtils {
             String voteAverage = jsonObject.optString(TMDB_VOTE_AVERAGE);
             String synopsis = jsonObject.optString(TMDB_SYNOPSIS);
             String releaseDate = jsonObject.optString(TMDB_RELEASE);
+            String movieId = jsonObject.optString(TMDB_MOVIE_ID);
 
             movie.setMovieTitle(title);
             movie.setPoster(BASE_URL + POSTER_SIZE + posterPath);
             movie.setRating(voteAverage);
             movie.setSynopsis(synopsis);
             movie.setReleaseDate(releaseDate);
+            movie.setId(movieId);
 
             movies[i] = movie;
         }
