@@ -3,10 +3,7 @@ package com.riceplant.popularmovies.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,20 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.riceplant.popularmovies.Movie;
 import com.riceplant.popularmovies.R;
+import com.riceplant.popularmovies.Reviews;
 import com.riceplant.popularmovies.Trailer;
+import com.riceplant.popularmovies.adapter.ReviewsAdapter;
 import com.riceplant.popularmovies.adapter.TrailerAdapter;
+import com.riceplant.popularmovies.utils.MovieDetailsUtils;
 import com.riceplant.popularmovies.utils.NetworkUtils;
-import com.riceplant.popularmovies.utils.TrailerDetailsUtils;
 import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private RecyclerView mRecylerView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerViewReviews;
     private String movieId;
     private TrailerAdapter mTrailerAdapter;
     private Trailer[] trailer;
+    private ReviewsAdapter mReviewsAdapter;
+    private Reviews[] reviews;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,12 +44,21 @@ public class DetailActivity extends AppCompatActivity {
         TextView releaseDateTv = findViewById(R.id.release_date_details);
         ImageView moviePosterIv = findViewById(R.id.poster_iv_details);
 
-        mRecylerView = findViewById(R.id.recycler_view_trailer);
+        // trailers
+        mRecyclerView = findViewById(R.id.recycler_view_trailer);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecylerView.setLayoutManager(layoutManager);
-        mRecylerView.setHasFixedSize(true);
-        mRecylerView.setAdapter(mTrailerAdapter);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mTrailerAdapter);
+
+        // reviews
+        mRecyclerViewReviews = (RecyclerView) findViewById(R.id.recycler_view_reviews);
+
+        LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
+        mRecyclerViewReviews.setLayoutManager(reviewsLayoutManager);
+        mRecyclerViewReviews.setHasFixedSize(true);
+        mRecyclerViewReviews.setAdapter(mReviewsAdapter);
 
         Intent intentToCatch = getIntent();
         Movie movie = intentToCatch.getParcelableExtra(MainActivity.MY_MOVIE);
@@ -67,13 +78,19 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get()
                 .load(poster)
                 .into(moviePosterIv);
+
         loadTrailerData();
+        loadReviewData();
     }
 
     private void loadTrailerData() {
         String trailerData = movieId;
         new fetchTrailerDataTask().execute(trailerData);
-        Log.v("TrailerId", movieId);
+    }
+
+    private void loadReviewData() {
+        String reviewData = movieId;
+        new fetchReviewDataTask().execute(reviewData);
     }
 
     public class fetchTrailerDataTask extends AsyncTask<String, Void, Trailer[]> {
@@ -94,7 +111,7 @@ public class DetailActivity extends AppCompatActivity {
 
             try {
                 String jsonTrailerResponse = NetworkUtils.getResponseFromHttpUrl(trailerRequestUrl);
-                trailer = TrailerDetailsUtils.getSimpleTrailerDetailsFromJson(DetailActivity.this, jsonTrailerResponse);
+                trailer = MovieDetailsUtils.getSimpleTrailerDetailsFromJson(DetailActivity.this, jsonTrailerResponse);
 
                 return trailer;
 
@@ -107,13 +124,44 @@ public class DetailActivity extends AppCompatActivity {
         protected void onPostExecute(Trailer[] trailers) {
             if (trailers != null) {
                 mTrailerAdapter = new TrailerAdapter(trailers, DetailActivity.this);
-                mRecylerView.setAdapter(mTrailerAdapter);
-            } else {
-
+                mRecyclerView.setAdapter(mTrailerAdapter);
             }
         }
 
     }
 
+    public class fetchReviewDataTask extends AsyncTask<String, Void, Reviews[]> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Reviews[] doInBackground(String... strings) {
+            if (strings.length == 0) {
+                return null;
+            }
+
+            URL reviewRequestUrl = NetworkUtils.buildReviewsUrl(movieId);
+
+            try {
+                String jsonReviewResponse = NetworkUtils.getResponseFromHttpUrl(reviewRequestUrl);
+                reviews = MovieDetailsUtils.getSimpleReviewDetailFromJson(DetailActivity.this, jsonReviewResponse);
+                return reviews;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(Reviews[] review) {
+            if (review != null) {
+                mReviewsAdapter = new ReviewsAdapter(review, DetailActivity.this);
+                mRecyclerViewReviews.setAdapter(mReviewsAdapter);
+            }
+        }
+
+    }
 
 }
