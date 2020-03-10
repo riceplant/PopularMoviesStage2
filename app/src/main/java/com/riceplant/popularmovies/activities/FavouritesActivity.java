@@ -14,9 +14,9 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.riceplant.popularmovies.data.FavouritesContract;
 import com.riceplant.popularmovies.R;
 import com.riceplant.popularmovies.adapter.FavouritesAdapter;
+import com.riceplant.popularmovies.data.FavouritesContract;
 
 public class FavouritesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -37,7 +37,7 @@ public class FavouritesActivity extends AppCompatActivity implements LoaderManag
         GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new FavouritesAdapter();
+        mAdapter = new FavouritesAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
@@ -84,12 +84,12 @@ public class FavouritesActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-
+        mAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-
+        mAdapter.swapCursor(null);
     }
 
     @Override

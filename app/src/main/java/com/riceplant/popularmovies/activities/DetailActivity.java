@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,14 +20,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.riceplant.popularmovies.R;
+import com.riceplant.popularmovies.adapter.ReviewsAdapter;
+import com.riceplant.popularmovies.adapter.TrailerAdapter;
 import com.riceplant.popularmovies.data.FavouritesContract;
 import com.riceplant.popularmovies.data.FavouritesDbHelper;
 import com.riceplant.popularmovies.model.Movie;
-import com.riceplant.popularmovies.R;
 import com.riceplant.popularmovies.model.Reviews;
 import com.riceplant.popularmovies.model.Trailer;
-import com.riceplant.popularmovies.adapter.ReviewsAdapter;
-import com.riceplant.popularmovies.adapter.TrailerAdapter;
 import com.riceplant.popularmovies.utils.MovieDetailsUtils;
 import com.riceplant.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
@@ -117,7 +116,7 @@ public class DetailActivity extends AppCompatActivity {
                     removeFavourites(movieId);
 
                     Context context = getApplicationContext();
-                    CharSequence removedFavorites = "This movie is removed from your favorites.";
+                    CharSequence removedFavorites = "This movie is removed from your favourites.";
                     Toast toast = Toast.makeText(context, removedFavorites, Toast.LENGTH_SHORT);
                     toast.show();
 
@@ -125,7 +124,7 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     addToFavourites(movieTitle, movieId, poster, rating, releaseDate, synopsis);
                     Context context = getApplicationContext();
-                    CharSequence addedFavorites = "This movie is added to your favorites.";
+                    CharSequence addedFavorites = "This movie is added to your favourites.";
                     Toast toast = Toast.makeText(context, addedFavorites, Toast.LENGTH_SHORT);
                     toast.show();
 

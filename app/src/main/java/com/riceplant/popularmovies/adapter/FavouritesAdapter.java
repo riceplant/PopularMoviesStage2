@@ -11,14 +11,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.riceplant.popularmovies.R;
 import com.riceplant.popularmovies.activities.FavouritesDetailsActivity;
 import com.riceplant.popularmovies.data.FavouritesContract;
-import com.riceplant.popularmovies.model.Movie;
-import com.riceplant.popularmovies.R;
-import com.riceplant.popularmovies.activities.DetailActivity;
 import com.squareup.picasso.Picasso;
-
-import static com.riceplant.popularmovies.activities.MainActivity.MY_MOVIE;
 
 public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouriteViewHolder> {
 
@@ -27,7 +23,10 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     public String name = "";
     public String poster = "";
     public int id;
-    private Movie[] movies;
+
+    public FavouritesAdapter(Context context) {
+        mContext = context;
+    }
 
     @NonNull
     @Override
@@ -88,33 +87,26 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-//            mCursor.moveToPosition(adapterPosition);
-//            Class destinationClass = FavoritesDetailActivity.class;
-//
-//            String name = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_NAME));
-//            int movieId = mCursor.getInt(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_ID));
-//            String overview = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_OVERVIEW));
-//            String rate = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_RATE));
-//            String release = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_RELEASE));
-//            String poster = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_POSTER));
-//
-//            Intent intentToStartDetailActivity = new Intent(mContext, destinationClass);
-//            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, adapterPosition);
-//            intentToStartDetailActivity.putExtra("title", name);
-//            intentToStartDetailActivity.putExtra("poster", poster);
-//            intentToStartDetailActivity.putExtra("rate", rate);
-//            intentToStartDetailActivity.putExtra("release", release);
-//            intentToStartDetailActivity.putExtra("overview", overview);
-//            intentToStartDetailActivity.putExtra("id", movieId);
-//
-//            mContext.startActivity(intentToStartDetailActivity);
-
+            mCursor.moveToPosition(adapterPosition);
             Class favouriteDetailClass = FavouritesDetailsActivity.class;
 
-            Intent detailIntent = new Intent(mContext, favouriteDetailClass);
-            detailIntent.putExtra(MY_MOVIE, movies[adapterPosition]);
-            mContext.startActivity(detailIntent);
+            String name = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_NAME));
+            String movieId = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_ID));
+            String overview = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_OVERVIEW));
+            String rate = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_RATE));
+            String release = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_RELEASE));
+            String poster = mCursor.getString(mCursor.getColumnIndex(FavouritesContract.FavouritesAdd.COLUMN_MOVIE_POSTER));
 
+            Intent intentToStartDetailActivity = new Intent(mContext, favouriteDetailClass);
+            intentToStartDetailActivity.putExtra(Intent.EXTRA_TEXT, adapterPosition);
+            intentToStartDetailActivity.putExtra("title", name);
+            intentToStartDetailActivity.putExtra("poster", poster);
+            intentToStartDetailActivity.putExtra("rate", rate);
+            intentToStartDetailActivity.putExtra("release", release);
+            intentToStartDetailActivity.putExtra("overview", overview);
+            intentToStartDetailActivity.putExtra("id", movieId);
+
+            mContext.startActivity(intentToStartDetailActivity);
         }
     }
 }

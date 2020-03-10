@@ -2,7 +2,6 @@ package com.riceplant.popularmovies.activities;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -25,7 +24,6 @@ import com.riceplant.popularmovies.adapter.ReviewsAdapter;
 import com.riceplant.popularmovies.adapter.TrailerAdapter;
 import com.riceplant.popularmovies.data.FavouritesContract;
 import com.riceplant.popularmovies.data.FavouritesDbHelper;
-import com.riceplant.popularmovies.model.Movie;
 import com.riceplant.popularmovies.model.Reviews;
 import com.riceplant.popularmovies.model.Trailer;
 import com.riceplant.popularmovies.utils.MovieDetailsUtils;
@@ -88,15 +86,22 @@ public class FavouritesDetailsActivity extends AppCompatActivity {
         mRecyclerViewReviews.setHasFixedSize(true);
         mRecyclerViewReviews.setAdapter(mReviewsAdapter);
 
-        Intent intentToCatch = getIntent();
-        final Movie movie = intentToCatch.getParcelableExtra(MainActivity.MY_MOVIE);
+//        Intent intentToCatch = getIntent();
+//        final Movie movie = intentToCatch.getParcelableExtra(FavouritesAdapter.MY_MOVIE);
 
-        final String movieTitle = movie.getMovieTitle();
-        final String poster = movie.getPoster();
-        final String rating = movie.getRating();
-        final String synopsis = movie.getSynopsis();
-        final String releaseDate = movie.getReleaseDate();
-        movieId = movie.getId();
+//        final String movieTitle = movie.getMovieTitle();
+//        final String poster = movie.getPoster();
+//        final String rating = movie.getRating();
+//        final String synopsis = movie.getSynopsis();
+//        final String releaseDate = movie.getReleaseDate();
+//        movieId = movie.getId();
+
+        final String movieTitle = getIntent().getStringExtra("title");
+        final String poster = getIntent().getStringExtra("poster");
+        final String rating = getIntent().getStringExtra("rate");
+        final String releaseDate = getIntent().getStringExtra("release");
+        final String synopsis = getIntent().getStringExtra("overview");
+        final String movieId = getIntent().getStringExtra("id");
 
         movieTitleTv.setText(movieTitle);
         ratingTv.setText(rating);
@@ -113,7 +118,7 @@ public class FavouritesDetailsActivity extends AppCompatActivity {
                     removeFavorites(movieId);
 
                     Context context = getApplicationContext();
-                    CharSequence removedFavorites = "This movie is removed from your favorites.";
+                    CharSequence removedFavorites = "This movie is removed from your favourites.";
                     Toast toast = Toast.makeText(context, removedFavorites, Toast.LENGTH_SHORT);
                     toast.show();
 
@@ -121,7 +126,7 @@ public class FavouritesDetailsActivity extends AppCompatActivity {
                 } else {
                     addToFavourites(movieTitle, movieId, poster, rating, releaseDate, synopsis);
                     Context context = getApplicationContext();
-                    CharSequence addedFavorites = "This movie is added to your favorites.";
+                    CharSequence addedFavorites = "This movie is added to your favourites.";
                     Toast toast = Toast.makeText(context, addedFavorites, Toast.LENGTH_SHORT);
                     toast.show();
 
