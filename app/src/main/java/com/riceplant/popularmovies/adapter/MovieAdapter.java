@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.riceplant.popularmovies.Movie;
+import com.riceplant.popularmovies.model.Movie;
 import com.riceplant.popularmovies.R;
 import com.squareup.picasso.Picasso;
 

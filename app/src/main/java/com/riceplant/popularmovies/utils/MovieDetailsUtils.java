@@ -2,9 +2,9 @@ package com.riceplant.popularmovies.utils;
 
 import android.content.Context;
 
-import com.riceplant.popularmovies.Movie;
-import com.riceplant.popularmovies.Reviews;
-import com.riceplant.popularmovies.Trailer;
+import com.riceplant.popularmovies.model.Movie;
+import com.riceplant.popularmovies.model.Reviews;
+import com.riceplant.popularmovies.model.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
