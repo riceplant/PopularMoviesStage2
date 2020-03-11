@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import static com.riceplant.popularmovies.data.FavouritesContract.FavouritesAdd.TABLE_NAME;
 
-public class FavouritesContentProvide extends ContentProvider{
+public class FavouritesContentProvide extends ContentProvider {
 
         public static final int FAVOURITES = 700;
         public static final int FAVOURITES_WITH_ID = 701;

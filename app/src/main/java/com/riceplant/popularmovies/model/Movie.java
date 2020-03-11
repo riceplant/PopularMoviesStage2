@@ -3,8 +3,14 @@ package com.riceplant.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "movie_table")
 public class Movie implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int mSecondId;
     private String mMovieTitle;
     private String mPoster;
     private String mRating;
@@ -35,6 +41,14 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    public int getSecondId() {
+        return mSecondId;
+    }
+
+    public void setSecondId(int secondId) {
+        this.mSecondId = secondId;
+    }
 
     public String getMovieTitle() {
         return mMovieTitle;

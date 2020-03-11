@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(savedInstanceState != null){
+            movieSearchQuery = savedInstanceState.getString(LIFECYCLE_CALLBACKS_TEXT_KEY);
+        }
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mErrorMessageTextView = findViewById(R.id.tv_error_message_display);

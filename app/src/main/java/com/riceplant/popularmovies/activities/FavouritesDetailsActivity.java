@@ -86,16 +86,6 @@ public class FavouritesDetailsActivity extends AppCompatActivity {
         mRecyclerViewReviews.setHasFixedSize(true);
         mRecyclerViewReviews.setAdapter(mReviewsAdapter);
 
-//        Intent intentToCatch = getIntent();
-//        final Movie movie = intentToCatch.getParcelableExtra(FavouritesAdapter.MY_MOVIE);
-
-//        final String movieTitle = movie.getMovieTitle();
-//        final String poster = movie.getPoster();
-//        final String rating = movie.getRating();
-//        final String synopsis = movie.getSynopsis();
-//        final String releaseDate = movie.getReleaseDate();
-//        movieId = movie.getId();
-
         final String movieTitle = getIntent().getStringExtra("title");
         final String poster = getIntent().getStringExtra("poster");
         final String rating = getIntent().getStringExtra("rate");
