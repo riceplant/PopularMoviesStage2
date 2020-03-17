@@ -10,11 +10,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MovieDetailsUtils {
 
     public static final String TMDB_RESULTS = "results";
 
-    public static Movie[] getSimpleMovieDetailsFromJson(String movieJsonString) throws JSONException {
+    public static List<Movie> getSimpleMovieDetailsFromJson(String movieJsonString) throws JSONException {
 
         final String BASE_URL = "https://image.tmdb.org/t/p/";
         final String POSTER_SIZE = "w500";
@@ -29,7 +32,7 @@ public class MovieDetailsUtils {
         JSONObject movieJson = new JSONObject(movieJsonString);
         JSONArray resultsArray = movieJson.optJSONArray(TMDB_RESULTS);
 
-        Movie[] movies = new Movie[resultsArray.length()];
+        List<Movie> movies = new ArrayList<>();
 
         for (int i = 0; i < resultsArray.length(); i++) {
 
@@ -51,7 +54,7 @@ public class MovieDetailsUtils {
             movie.setReleaseDate(releaseDate);
             movie.setId(movieId);
 
-            movies[i] = movie;
+            movies.add(movie);
         }
         return movies;
     }

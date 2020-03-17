@@ -23,6 +23,7 @@ import com.riceplant.popularmovies.utils.MovieDetailsUtils;
 import com.riceplant.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private TextView mErrorMessageTextView;
     private ProgressBar mLoadingIndicator;
     private MovieAdapter mMovieAdapter;
-    private Movie[] movies;
+    private List<Movie> movies;
 
     public static final String MY_MOVIE = "myMovie";
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Class detailClass = DetailActivity.class;
 
         Intent detailIntent = new Intent(context, detailClass);
-        detailIntent.putExtra(MY_MOVIE, movies[adapterPosition]);
+        detailIntent.putExtra(MY_MOVIE, movies.get(adapterPosition));
         startActivity(detailIntent);
 
     }
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageTextView.setVisibility(View.VISIBLE);
     }
 
-    public class fetchMovieDataTask extends AsyncTask<String, Void, Movie[]> {
+    public class fetchMovieDataTask extends AsyncTask<String, Void, List<Movie>> {
 
         @Override
         protected void onPreExecute() {
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
 
         @Override
-        protected Movie[] doInBackground(String... strings) {
+        protected List<Movie> doInBackground(String... strings) {
             if (strings.length == 0) {
                 return null;
             }
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
         @Override
-        protected void onPostExecute(Movie[] movies) {
+        protected void onPostExecute(List<Movie> movies) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (movies != null) {
                 mMovieAdapter = new MovieAdapter(movies, MainActivity.this);

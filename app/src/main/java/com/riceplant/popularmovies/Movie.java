@@ -106,6 +106,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mDatabaseId);
         parcel.writeString(mMovieTitle);
         parcel.writeString(mPoster);
         parcel.writeString(mRating);
