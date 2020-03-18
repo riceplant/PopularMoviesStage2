@@ -1,4 +1,4 @@
-package com.riceplant.popularmovies;
+package com.riceplant.popularmovies.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

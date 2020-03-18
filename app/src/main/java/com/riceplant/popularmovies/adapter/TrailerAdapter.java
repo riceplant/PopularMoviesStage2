@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.riceplant.popularmovies.R;
-import com.riceplant.popularmovies.Trailer;
+import com.riceplant.popularmovies.model.Trailer;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerAdapterViewHolder> {
 
