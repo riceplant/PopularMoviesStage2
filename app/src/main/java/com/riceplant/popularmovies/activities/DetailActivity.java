@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.riceplant.popularmovies.AppExecutors;
 import com.riceplant.popularmovies.FavouriteMovie;
-import com.riceplant.popularmovies.Movie;
 import com.riceplant.popularmovies.MovieRoomDatabase;
 import com.riceplant.popularmovies.R;
-import com.riceplant.popularmovies.Reviews;
-import com.riceplant.popularmovies.Trailer;
 import com.riceplant.popularmovies.adapter.ReviewsAdapter;
 import com.riceplant.popularmovies.adapter.TrailerAdapter;
+import com.riceplant.popularmovies.model.Movie;
+import com.riceplant.popularmovies.model.Reviews;
+import com.riceplant.popularmovies.model.Trailer;
 import com.riceplant.popularmovies.utils.MovieDetailsUtils;
 import com.riceplant.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;

@@ -22,10 +22,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.riceplant.popularmovies.FavouriteMovie;
-import com.riceplant.popularmovies.Movie;
 import com.riceplant.popularmovies.MovieViewModel;
 import com.riceplant.popularmovies.R;
 import com.riceplant.popularmovies.adapter.MovieAdapter;
+import com.riceplant.popularmovies.model.Movie;
 import com.riceplant.popularmovies.utils.MovieDetailsUtils;
 import com.riceplant.popularmovies.utils.NetworkUtils;
 
