@@ -3,6 +3,8 @@ package com.riceplant.popularmovies.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.riceplant.popularmovies.AppExecutors;
+import com.riceplant.popularmovies.FavouriteMovie;
 import com.riceplant.popularmovies.Movie;
+import com.riceplant.popularmovies.MovieRoomDatabase;
 import com.riceplant.popularmovies.R;
 import com.riceplant.popularmovies.Reviews;
 import com.riceplant.popularmovies.Trailer;
@@ -27,11 +32,24 @@ public class DetailActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView mRecyclerViewReviews;
-    private String movieId;
+
+    private int movieId;
+    private String movieTitle;
+    private String poster;
+    private String rating;
+    private String synopsis;
+    private String releaseDate;
+    private Movie movie;
+
     private TrailerAdapter mTrailerAdapter;
     private Trailer[] trailer;
     private ReviewsAdapter mReviewsAdapter;
     private Reviews[] reviews;
+    private Button favButton;
+
+    private MovieRoomDatabase mDb;
+
+    private Boolean mIsFav = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +61,60 @@ public class DetailActivity extends AppCompatActivity {
         TextView synopsisTv = findViewById(R.id.synopsis_details);
         TextView releaseDateTv = findViewById(R.id.release_date_details);
         ImageView moviePosterIv = findViewById(R.id.poster_iv_details);
+        favButton = findViewById(R.id.favourite_button_details);
+
+        Intent intentToCatch = getIntent();
+        movie = intentToCatch.getParcelableExtra(MainActivity.MY_MOVIE);
+
+        movieTitle = movie.getMovieTitle();
+        poster = movie.getPoster();
+        rating = movie.getRating();
+        synopsis = movie.getSynopsis();
+        releaseDate = movie.getReleaseDate();
+        movieId = movie.getId();
+
+        mDb = MovieRoomDatabase.getInstance(getApplicationContext());
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                final FavouriteMovie fmov = mDb.movieDao().loadMovieById(Integer.parseInt(String.valueOf(movie.getId())));
+                setFavourite((fmov != null) ? true : false);
+            }
+        });
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final FavouriteMovie mov = new FavouriteMovie(
+                        movie.getMovieTitle(),
+                        movie.getPoster(),
+                        movie.getRating(),
+                        movie.getSynopsis(),
+                        movie.getReleaseDate(),
+                        movie.getId()
+                );
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mIsFav) {
+                            // delete item
+                            mDb.movieDao().deleteMovie(mov);
+                        } else {
+                            // insert item
+                            mDb.movieDao().insertMovie(mov);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                setFavourite(!mIsFav);
+                            }
+                        });
+                    }
+
+                });
+            }
+        });
 
         // trailers
         mRecyclerView = findViewById(R.id.recycler_view_trailer);
@@ -60,16 +132,6 @@ public class DetailActivity extends AppCompatActivity {
         mRecyclerViewReviews.setHasFixedSize(true);
         mRecyclerViewReviews.setAdapter(mReviewsAdapter);
 
-        Intent intentToCatch = getIntent();
-        Movie movie = intentToCatch.getParcelableExtra(MainActivity.MY_MOVIE);
-
-        String movieTitle = movie.getMovieTitle();
-        String poster = movie.getPoster();
-        String rating = movie.getRating();
-        String synopsis = movie.getSynopsis();
-        String releaseDate = movie.getReleaseDate();
-        movieId = movie.getId();
-
         movieTitleTv.setText(movieTitle);
         ratingTv.setText(rating);
         synopsisTv.setText(synopsis);
@@ -79,18 +141,33 @@ public class DetailActivity extends AppCompatActivity {
                 .load(poster)
                 .into(moviePosterIv);
 
-        loadTrailerData();
-        loadReviewData();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadTrailerData();
+                loadReviewData();
+            }
+        });
     }
 
     private void loadTrailerData() {
-        String trailerData = movieId;
-        new fetchTrailerDataTask().execute(trailerData);
+        int trailerData = movieId;
+        new fetchTrailerDataTask().execute(String.valueOf(trailerData));
     }
 
     private void loadReviewData() {
-        String reviewData = movieId;
-        new fetchReviewDataTask().execute(reviewData);
+        int reviewData = movieId;
+        new fetchReviewDataTask().execute(String.valueOf(reviewData));
+    }
+
+    private void setFavourite(Boolean isFav) {
+        if (isFav) {
+            mIsFav = true;
+            favButton.setText("Remove from Favourites");
+        } else {
+            mIsFav = false;
+            favButton.setText("Add To Favourites");
+        }
     }
 
     public class fetchTrailerDataTask extends AsyncTask<String, Void, Trailer[]> {
@@ -107,7 +184,7 @@ public class DetailActivity extends AppCompatActivity {
                 return null;
             }
 
-            URL trailerRequestUrl = NetworkUtils.buildTrailerUrl(movieId);
+            URL trailerRequestUrl = NetworkUtils.buildTrailerUrl(Integer.toString(movieId));
 
             try {
                 String jsonTrailerResponse = NetworkUtils.getResponseFromHttpUrl(trailerRequestUrl);
@@ -120,6 +197,7 @@ public class DetailActivity extends AppCompatActivity {
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(Trailer[] trailers) {
             if (trailers != null) {
@@ -142,7 +220,7 @@ public class DetailActivity extends AppCompatActivity {
                 return null;
             }
 
-            URL reviewRequestUrl = NetworkUtils.buildReviewsUrl(movieId);
+            URL reviewRequestUrl = NetworkUtils.buildReviewsUrl(String.valueOf(movieId));
 
             try {
                 String jsonReviewResponse = NetworkUtils.getResponseFromHttpUrl(reviewRequestUrl);
@@ -154,6 +232,7 @@ public class DetailActivity extends AppCompatActivity {
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(Reviews[] review) {
             if (review != null) {

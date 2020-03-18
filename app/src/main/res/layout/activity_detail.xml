@@ -64,6 +64,12 @@
                     android:padding="8dp"
                     tools:text="10" />
 
+                <Button
+                    android:id="@+id/favourite_button_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Add to Favourites"/>
+
             </LinearLayout>
 
         </LinearLayout>

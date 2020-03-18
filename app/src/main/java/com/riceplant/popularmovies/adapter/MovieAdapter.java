@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private final List<Movie> mMovieData;
+    private List<Movie> mMovieData;
     private final MovieAdapterOnClickHandler mClickHandler;
 
     public MovieAdapter(List<Movie> movies, MovieAdapterOnClickHandler clickHandler) {
@@ -66,6 +66,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                 .placeholder(R.drawable.image_loading)
                 .error(R.drawable.image_not_found)
                 .into(movieAdapterViewholder.mMoviePoster);
+    }
+
+    public void setMovieData(List<Movie> movieData) {
+        mMovieData = movieData;
+        notifyDataSetChanged();
     }
 
     @Override

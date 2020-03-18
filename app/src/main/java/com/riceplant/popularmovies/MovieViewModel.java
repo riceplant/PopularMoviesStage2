@@ -10,21 +10,19 @@ import java.util.List;
 
 public class MovieViewModel extends AndroidViewModel {
 
-    private MovieRepository mRepository;
+    // Constant for logging
+    private static final String TAG = MovieViewModel.class.getSimpleName();
 
-    private LiveData<List<Movie>> mAllMovies;
+    private LiveData<List<FavouriteMovie>> movies;
 
-    public MovieViewModel(@NonNull Application application) {
+    public MovieViewModel(Application application) {
         super(application);
-        mRepository = new MovieRepository(application);
-        mAllMovies = mRepository.getAllMovies();
+        MovieRoomDatabase database = MovieRoomDatabase.getInstance(this.getApplication());
+//        Log.d(TAG, "Actively retrieving favorite movies from the DataBase");
+        movies = database.movieDao().loadAllMovies();
     }
 
-    LiveData<List<Movie>> getAllMovies() {
-        return mAllMovies;
-    }
-
-    public void insert(Movie movie) {
-        mRepository.insert(movie);
+    public LiveData<List<FavouriteMovie>> getMovies() {
+        return movies;
     }
 }

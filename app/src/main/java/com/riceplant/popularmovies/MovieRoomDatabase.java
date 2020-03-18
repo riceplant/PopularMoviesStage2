@@ -2,52 +2,28 @@ package com.riceplant.popularmovies;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-@Database(entities = {Movie.class}, version = 1, exportSchema = false)
+@Database(entities = {FavouriteMovie.class}, version = 3, exportSchema = false)
 public abstract class MovieRoomDatabase extends RoomDatabase {
+    private static final String LOG_TAG = MovieRoomDatabase.class.getSimpleName();
+    private static final Object LOCK = new Object();
+    private static final String DATABASE_NAME = "movieslist";
+    private static MovieRoomDatabase sInstance;
 
-    public abstract MovieDao movieDao();
-
-    private static volatile MovieRoomDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
-    static MovieRoomDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (MovieRoomDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    MovieRoomDatabase.class, "movie_database")
-                            .addCallback(sRoomDatabaseCallback)
-                            .build();
-                }
+    public static MovieRoomDatabase getInstance(Context context) {
+        if (sInstance == null) {
+            synchronized (LOCK) {
+                sInstance = Room.databaseBuilder(context.getApplicationContext(),
+                        MovieRoomDatabase.class, MovieRoomDatabase.DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
+                        .build();
             }
         }
-        return INSTANCE;
+        return sInstance;
     }
 
-    private static MovieRoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
-
-        @Override
-        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            super.onOpen(db);
-
-            databaseWriteExecutor.execute(() -> {
-                MovieDao dao = INSTANCE.movieDao();
-                dao.deleteAllMovies();
-
-                Movie movie = new Movie();
-                dao.insert(movie);
-            });
-        }
-    };
+    public abstract MovieDao movieDao();
 }

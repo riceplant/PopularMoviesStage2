@@ -45,7 +45,7 @@ public class MovieDetailsUtils {
             String voteAverage = jsonObject.optString(TMDB_VOTE_AVERAGE);
             String synopsis = jsonObject.optString(TMDB_SYNOPSIS);
             String releaseDate = jsonObject.optString(TMDB_RELEASE);
-            String movieId = jsonObject.optString(TMDB_MOVIE_ID);
+            int movieId = jsonObject.optInt(TMDB_MOVIE_ID);
 
             movie.setMovieTitle(title);
             movie.setPoster(BASE_URL + POSTER_SIZE + posterPath);
