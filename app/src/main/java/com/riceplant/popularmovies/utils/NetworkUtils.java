@@ -15,10 +15,44 @@ public class NetworkUtils {
 
     private static final String PARAM_API_KEY = "api_key";
     private static final String API_KEY = "INSERT_YOUR_API_KEY_HERE";
+    private static final String VIDEOS = "videos";
+    private static final String REVIEWS = "reviews";
 
     public static URL buildUrl(String movieSearchQuery) {
         Uri builtUri = Uri.parse(BASE_URL).buildUpon()
                 .appendEncodedPath(movieSearchQuery)
+                .appendQueryParameter(PARAM_API_KEY, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    public static URL buildTrailerUrl(String movieId) {
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendEncodedPath(movieId)
+                .appendEncodedPath(VIDEOS)
+                .appendQueryParameter(PARAM_API_KEY, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    public static URL buildReviewsUrl(String movieId) {
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon()
+                .appendEncodedPath(movieId)
+                .appendEncodedPath(REVIEWS)
                 .appendQueryParameter(PARAM_API_KEY, API_KEY)
                 .build();
 

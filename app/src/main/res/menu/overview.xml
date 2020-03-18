@@ -2,14 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_sorting_popular"
-          android:orderInCategory="1"
-          android:title="@string/popularity"
-          app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sorting_popular"
+        android:orderInCategory="1"
+        android:title="@string/popularity"
+        app:showAsAction="never" />
 
-    <item android:id="@+id/action_sorting_top_rated"
-          android:orderInCategory="2"
-          android:title="@string/top_rated"
-          app:showAsAction="never" />
+    <item
+        android:id="@+id/action_sorting_top_rated"
+        android:orderInCategory="2"
+        android:title="@string/top_rated"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sorting_favourite"
+        android:orderInCategory="3"
+        android:title="@string/favourites"
+        app:showAsAction="never" />
 
 </menu>

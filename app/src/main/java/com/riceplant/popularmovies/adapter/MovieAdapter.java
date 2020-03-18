@@ -13,12 +13,15 @@ import com.riceplant.popularmovies.Movie;
 import com.riceplant.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
-    private final Movie[] mMovieData;
+    private List<Movie> mMovieData;
     private final MovieAdapterOnClickHandler mClickHandler;
 
-    public MovieAdapter(Movie[] movies, MovieAdapterOnClickHandler clickHandler) {
+    public MovieAdapter(List<Movie> movies, MovieAdapterOnClickHandler clickHandler) {
         mMovieData = movies;
         mClickHandler = clickHandler;
     }
@@ -57,7 +60,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewholder, int position) {
-        String currentMovie = mMovieData[position].getPoster();
+        String currentMovie = mMovieData.get(position).getPoster();
         Picasso.get()
                 .load(currentMovie)
                 .placeholder(R.drawable.image_loading)
@@ -65,11 +68,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                 .into(movieAdapterViewholder.mMoviePoster);
     }
 
+    public void setMovieData(List<Movie> movieData) {
+        mMovieData = movieData;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         if (mMovieData == null) {
             return 0;
         }
-        return mMovieData.length;
+        return mMovieData.size();
     }
 }
