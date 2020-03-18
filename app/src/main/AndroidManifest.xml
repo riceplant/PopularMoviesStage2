@@ -28,10 +28,6 @@
                 android:value=".activities.MainActivity" />
 
         </activity>
-        <activity
-            android:name=".FavouriteActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.MainActivity" />
     </application>
 
 </manifest>

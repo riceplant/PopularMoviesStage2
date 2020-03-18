@@ -13,15 +13,6 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-    @Insert()
-    void insert(FavouriteMovie favouriteMovie);
-
-    @Query("DELETE FROM movie")
-    void deleteAllMovies();
-
-    @Query("SELECT * FROM movie")
-    LiveData<List<FavouriteMovie>> getAllMovies();
-
     @Query("SELECT * FROM movie ORDER BY mId")
     LiveData<List<FavouriteMovie>> loadAllMovies();
 
